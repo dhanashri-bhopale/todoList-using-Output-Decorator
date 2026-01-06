@@ -1,0 +1,27 @@
+
+<h2 class="text-primary">Todo Form :-</h2>
+<div class="card mb-4">
+    <div class="card-body">
+        <form #todoForm="ngForm">
+            <div class="form-group">
+                <label for="todoItem">TodoItem</label>
+                <input type="text"
+                required
+                ngModel
+                name="todoItem"
+                #todoItem="ngModel"
+                class="form-control">
+
+                <strong 
+                *ngIf="todoItem.touched && todoItem.hasError('required')"
+                class="text-danger">
+                    TodoItemis a required field !!
+                </strong>
+            </div>
+
+            <button 
+            (click)="onAdd()"
+            class="btn-block" mat-raised-button color="primary">Add Todo</button>
+        </form>
+    </div>
+</div>
