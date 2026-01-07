@@ -8,6 +8,7 @@
         <div class="col-md-5 offset-md-1">
             <app-todo-list
             [todoObj]="todoArr"
+            (emitRemoveTodo)="getRemoveTodo($event)"
             ></app-todo-list>
         </div>
     </div>
