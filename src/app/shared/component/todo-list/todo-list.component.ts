@@ -30,7 +30,8 @@ export class TodoListComponent implements OnInit {
   onRemove(todo: Itodo){
     let matConfig = new MatDialogConfig()
     matConfig.disableClose = true
-    matConfig.data = `Are You Sure You Want To Delete this ${todo.todoItem} !!!`
+    matConfig.width = '300px'
+    matConfig.data = `Are You Sure, You Want To Delete this todoItem named '${todo.todoItem}' !!!`
 
     let matDialogRef = this._matDialog.open(GetConfirmComponent, matConfig)
     matDialogRef.afterClosed()
