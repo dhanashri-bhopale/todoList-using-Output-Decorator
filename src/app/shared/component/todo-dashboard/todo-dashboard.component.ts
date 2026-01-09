@@ -50,4 +50,20 @@ export class TodoDashboardComponent implements OnInit {
     })
   }
 
+  editTodo !: Itodo
+  getEditTodo(todo: Itodo){
+    this.editTodo = todo
+  }
+
+  getUpdatedTodo(todo: Itodo){
+    let getIndex = this.todoArr.findIndex(t => t.todoId === todo.todoId)
+    this.todoArr[getIndex] = todo
+    
+    this._snackBar.open(`The Todo Item Updated Successfully!!!`, 'Close', {
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+      duration: 3000
+    })
+  }
+
 }

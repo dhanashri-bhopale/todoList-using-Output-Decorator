@@ -1,5 +1,5 @@
 
-<h2 class="text-primary">Todo Form :-</h2>
+<h2 class="text-primary">{{isInEditMode ? 'Update TodoItem' : 'Add TodoItem'}} :-</h2>
 <div class="card mb-4">
     <div class="card-body">
         <form #todoForm="ngForm">
@@ -21,7 +21,13 @@
 
             <button 
             (click)="onAdd()"
+            *ngIf="!isInEditMode"
             class="btn-block" mat-raised-button color="primary">Add Todo</button>
+
+            <button 
+            *ngIf="isInEditMode"
+            (click)="onUpdate()"
+            class="btn-block" mat-raised-button color="accent">Update Todo</button>
         </form>
     </div>
 </div>

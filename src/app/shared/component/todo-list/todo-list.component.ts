@@ -21,7 +21,8 @@ export class TodoListComponent implements OnInit {
   }
 
   @Input() todoObj : Array<Itodo> = []
-  @Output() emitRemoveTodo : EventEmitter<string> = new EventEmitter()
+  @Output() emitRemoveTodo : EventEmitter<string> = new EventEmitter<string>()
+  @Output() emitEditTodo : EventEmitter<Itodo> = new EventEmitter<Itodo>()
 
   trackById(index: number, todo: Itodo){
     return todo.todoId
@@ -40,6 +41,11 @@ export class TodoListComponent implements OnInit {
         this.emitRemoveTodo.emit(todo.todoId)
       }
     })
+  }
+
+  onEdit(todo: Itodo){
+    console.log(todo)
+    this.emitEditTodo.emit(todo)
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Itodo } from '../../model/todo';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,7 +8,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.scss']
 })
-export class TodoFormComponent implements OnInit {
+export class TodoFormComponent implements OnInit, OnChanges{
+  @ViewChild('todoForm') todoForm !: NgForm
+  
+  @Output() emitNewTodo : EventEmitter<Itodo> = new EventEmitter()
+  @Input() getEditTodo !: Itodo
+  isInEditMode : boolean = false
+  @Output() emitUpdatedTodo : EventEmitter<Itodo> = new EventEmitter<Itodo>()
 
   constructor(
     private _matSnackBar : MatSnackBar
@@ -17,8 +23,14 @@ export class TodoFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @ViewChild('todoForm') todoForm !: NgForm
-@Output() emitNewTodo : EventEmitter<Itodo> = new EventEmitter()
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['getEditTodo']['currentValue']){
+      this.isInEditMode = true
+      this.todoForm.form.patchValue(changes['getEditTodo']['currentValue'])
+    }
+  }
+
+  
 
   onAdd(){
     if(this.todoForm.valid){
@@ -35,6 +47,18 @@ export class TodoFormComponent implements OnInit {
         verticalPosition: 'bottom',
         duration: 3000
       })
+    }
+  }
+
+  onUpdate(){
+    if(this.todoForm.valid){
+      let updatedObj : Itodo = {...this.todoForm.value, todoId : this.getEditTodo.todoId}
+      console.log(updatedObj)
+      this.emitUpdatedTodo.emit(updatedObj)
+      this.isInEditMode = false
+      this.todoForm.reset()
+
+      
     }
   }
 
